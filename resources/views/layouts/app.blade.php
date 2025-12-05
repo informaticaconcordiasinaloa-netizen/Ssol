@@ -56,6 +56,7 @@
             <a href="/">Inicio</a>
             <a href="/suma">Aplicación de la suma</a>
             <a href="/productos">Productos</a>
+            <a href="/departments">Departamentos</a>
 
             <div class="user-info">
                 @auth
