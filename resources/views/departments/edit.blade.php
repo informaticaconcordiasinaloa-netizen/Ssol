@@ -10,9 +10,19 @@
     @method('PUT')
 
     <div class="mb-3">
-        <label>Nombre</label>
-        <input type="text" name="nombre" class="form-control" value="{{ $department->nombre }}" required>
-    </div>
+    <label>Nombre</label>
+    <input 
+       type="text" 
+       name="nombre" 
+       class="form-control"
+       value="{{ old('nombre', $department->nombre) }}"
+       required>
+
+
+    @error('nombre')
+        <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
+</div>
 
     <div class="mb-3">
         <label>Activo</label>

@@ -10,7 +10,11 @@
 
     <div class="mb-3">
         <label>Nombre</label>
-        <input type="text" name="nombre" class="form-control" required>
+        <input type="text" name="nombre" value="{{ old('nombre') }}" class="form-control" required>
+
+        @error('nombre')
+            <div class="text-danger mt-1">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="mb-3">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class DepartmentController extends Controller
 {
@@ -18,23 +20,29 @@ class DepartmentController extends Controller
         return view('departments.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required',
-            'activo' => 'required|boolean',
-            'editable' => 'required|boolean',
-        ]);
+    public function store(Request $request){
+    $validated = $request->validate([
+        'nombre' => [
+            'required',
+            'string',
+            'max:255',
+            'unique:departments',
+            'regex:/^[^\s].*[^\s]$/', // prohibe espacios al inicio y final
+        ],
+        'activo' => 'required|boolean',
+        'editable' => 'required|boolean',
+    ], [
+        'nombre.required' => 'El nombre del departamento es obligatorio.',
+        'nombre.unique' => 'Ya existe un departamento con ese nombre.',
+        'nombre.regex' => 'El nombre no puede comenzar ni terminar con espacios.',
+    ]);
 
-        Department::create($request->validate([
-            'nombre'   => 'required|string|max:255',
-            'activo'   => 'required|boolean',
-            'editable' => 'required|boolean',
-        ]));
+    Department::create($validated);
 
+    return redirect()->route('departments.index')
+        ->with('success', 'Departamento añadido correctamente.');
+}
 
-        return redirect()->route('departments.index');
-    }
 
     public function edit($id)
     {
@@ -42,17 +50,28 @@ class DepartmentController extends Controller
         return view('departments.edit', compact('department'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nombre' => 'required',
+    public function update(Request $request, Department $department){
+        $validated = $request->validate([
+            'nombre' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[^\s].*[^\s]$/',
+                'unique:departments,nombre,' . $department->id . ',id'
+            ],
             'activo' => 'required|boolean',
             'editable' => 'required|boolean',
+        ], [
+            'nombre.required' => 'El nombre del departamento es obligatorio.',
+            'nombre.unique' => 'Ya existe un departamento con ese nombre.',
+            'nombre.regex' => 'El nombre no puede comenzar ni terminar con espacios.',
         ]);
 
-        $department = Department::findOrFail($id);
-        $department->update($request->all());
+        $department->update($validated);
 
-        return redirect()->route('departments.index');
+        return redirect()->route('departments.index')
+            ->with('success', 'Departamento actualizado correctamente.');
     }
+
+
 }
