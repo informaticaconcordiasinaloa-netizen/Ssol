@@ -21,6 +21,7 @@
             <th>Nombre</th>
             <th>Correo</th>
             <th>Acciones</th>
+            <th>Departamento</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->department ? $user->department->nombre : 'Sin asignar' }}</td>
                 <td>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">
                         Editar

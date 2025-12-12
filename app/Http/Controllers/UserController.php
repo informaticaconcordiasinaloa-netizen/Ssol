@@ -38,14 +38,24 @@ class UserController extends Controller
 
     public function edit($id){
         $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        $departments = \App\Models\Department::where('activo', 1)->get();
+
+        return view('users.edit', compact('user', 'departments'));
     }
 
+
     public function update(Request $request, $id){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'department_id' => 'nullable|exists:departments,id',
+        ]);
+
         $user = User::findOrFail($id);
-        $user->update($request->only('name', 'email'));
+        $user->update($request->only('name', 'email', 'department_id'));
 
         return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
     }
+
 
 }
