@@ -11,8 +11,22 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('auth');
+
+    Route::resource('users', UserController::class);
+
+    Route::resource('departments', DepartmentController::class);
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 });
 
 Route::get('/inicio', function () {
