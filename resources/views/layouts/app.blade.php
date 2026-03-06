@@ -45,6 +45,9 @@
             justify-content: center;
             width: 100%;
         }
+        .dropdown{
+            margin-top: -200px;
+        }
     </style>
 </head>
 <body>
@@ -57,26 +60,56 @@
             <a href="/suma">Aplicación de la suma</a>
             <a href="/productos">Productos</a>
             <a href="/departments">Departamentos</a>
-
-            <div class="user-info">
-                @auth
-                    <p>👤 {{ Auth::user()->name }}</p>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">Cerrar sesión</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm w-100">Iniciar sesión</a>
-                @endauth
-            </div>
         </div>
     @endif
 
     {{-- Contenido principal --}}
+    
     <div class="content @if(request()->is('login')) login-page @endif">
         @yield('content')
-    </div>
 
+        @if (!request()->is('login'))
+        <nav class="navbar navbar-light bg-light justify-content-end px-10">
+            <div class="dropdown">
+                <a class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                    <!-- Icono usuario -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle">
+                        <path d="M11 10a3 3 0 1 1 2 0v1a4 4 0 1 1-2 0v-1z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+                    </svg>
+
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                    @auth
+                    <li class="px-3 py-2">
+                        <strong>{{ Auth::user()->name }}</strong><br>
+                        <small class="text-muted">{{ Auth::user()->email }}</small>
+                    </li>
+                    @endauth
+
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="dropdown-item text-danger">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    @endif
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>
