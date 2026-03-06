@@ -64,10 +64,10 @@
     @endif
 
     {{-- Contenido principal --}}
-    
     <div class="content @if(request()->is('login')) login-page @endif">
         @yield('content')
 
+        {{-- El ícono de usuario --}}
         @if (!request()->is('login'))
         <nav class="navbar navbar-light bg-light justify-content-end px-10">
             <div class="dropdown">
