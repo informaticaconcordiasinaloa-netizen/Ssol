@@ -57,9 +57,28 @@
         <div class="sidebar">
             <h5 class="mb-4">Menú</h5>
             <a href="/">Inicio</a>
-            <a href="/suma">Aplicación de la suma</a>
-            <a href="/productos">Productos</a>
+
+            @if(Auth::user()->role->nombre == 'administrador')
+            <a href="/users">Usuarios</a>
+            @endif
+
+            @if(Auth::user()->role->nombre == 'administrador' || 
+            Auth::user()->role->nombre == 'director')
             <a href="/departments">Departamentos</a>
+            @endif
+
+            @if(Auth::user()->role->nombre == 'administrador' || 
+            Auth::user()->role->nombre == 'director' || 
+            Auth::user()->role->nombre == 'subdirector')
+                <a href="/productos">Productos</a>
+            @endif
+
+            @if(Auth::user()->role->nombre == 'administrador' || 
+            Auth::user()->role->nombre == 'director' || 
+            Auth::user()->role->nombre == 'subdirector'||
+            Auth::user()->role->nombre == 'usuario')
+            <a href="/suma">Aplicación de la suma</a>
+            @endif
         </div>
     @endif
 
@@ -68,7 +87,7 @@
         @yield('content')
 
         {{-- El ícono de usuario --}}
-        @if (!request()->is('login'))
+        @if (request()->is('/'))
         <nav class="navbar navbar-light bg-light justify-content-end px-10">
             <div class="dropdown">
                 <a class="d-flex align-items-center text-decoration-none dropdown-toggle"

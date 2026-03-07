@@ -47,6 +47,17 @@
             <input type="password" name="password" class="form-control" placeholder="Contraseña segura" required>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">Tipo de usuario</label>
+            <select name="role_id" class="form-control" required>
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}">
+                        {{ $role->nombre }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-primary">Crear Usuario</button>
     </form>
 </div>

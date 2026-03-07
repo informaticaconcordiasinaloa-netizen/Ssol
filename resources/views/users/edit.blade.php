@@ -32,6 +32,18 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">Tipo de usuario</label>
+            <select name="role_id" class="form-control">
+
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}"
+                        {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                        {{ $role->nombre }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>

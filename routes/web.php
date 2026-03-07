@@ -54,6 +54,27 @@ Route::get('/departments/create', [DepartmentController::class, 'create'])->name
 Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
 Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
 Route::put('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
+Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+
+Route::middleware(['auth'])->group(function () {
+
+    // SOLO ADMINISTRADOR
+    Route::middleware('role:administrador')->group(function () {
+        Route::resource('users', UserController::class);
+    });
+
+    // ADMINISTRADOR y DIRECTOR
+    Route::middleware('role:administrador,director')->group(function () {
+        Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+    });
+
+    // ADMINISTRADOR, DIRECTOR y SUBDIRECTOR
+    Route::middleware('role:administrador,director,subdirector,usuario')->group(function () {
+        Route::get('/productos', [ProductoController::class, 'index']);
+        Route::get('/suma', [SumaController::class, 'index']);
+    });
+
+});
 
 
 #Route::get('/dashboard', function () {
