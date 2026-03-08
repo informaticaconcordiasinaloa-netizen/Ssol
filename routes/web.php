@@ -75,7 +75,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/suma', [SumaController::class, 'index']);
     });
 
-
     Route::get('/tipo', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/tipo', [RoleController::class, 'store'])->name('roles.store');
     Route::delete('/tipo/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
