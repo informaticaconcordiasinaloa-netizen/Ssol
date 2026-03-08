@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -73,6 +74,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/productos', [ProductoController::class, 'index']);
         Route::get('/suma', [SumaController::class, 'index']);
     });
+
+
+    Route::get('/tipo', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/tipo', [RoleController::class, 'store'])->name('roles.store');
+    Route::delete('/tipo/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 });
 

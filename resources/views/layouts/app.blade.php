@@ -62,6 +62,10 @@
             <a href="/users">Usuarios</a>
             @endif
 
+            @if(Auth::user()->role->nombre == 'administrador')
+            <a href="/tipo">Tipos de usuario</a>
+            @endif
+
             @if(Auth::user()->role->nombre == 'administrador' || 
             Auth::user()->role->nombre == 'director')
             <a href="/departments">Departamentos</a>
