@@ -1,31 +1,26 @@
 @extends('layouts.app')
 
+@section('title', 'Tipos de usuario')
+
 @section('content')
 
-<div class="container">
+<h1>Tipos de Usuario</h1>
 
-<h2>Tipos de Usuario</h2>
+<a href="#" data-bs-toggle="modal" data-bs-target="#crearRol" class="btn btn-success mb-3">
+    Añadir Tipo de Usuario
+</a>
 
-{{-- FORMULARIO PARA AGREGAR --}}
-<form action="{{ route('roles.store') }}" method="POST">
+<table class="table table-bordered">
 
-@csrf
-
-<input type="text" name="nombre" placeholder="Nuevo tipo de usuario" required>
-
-<button type="submit">Agregar</button>
-
-</form>
-
-<br>
-
-<table border="1" cellpadding="10">
-
+<thead>
 <tr>
 <th>ID</th>
-<th>Tipo de usuario</th>
+<th>Nombre</th>
 <th>Acciones</th>
 </tr>
+</thead>
+
+<tbody>
 
 @foreach($roles as $role)
 
@@ -41,7 +36,12 @@
 @csrf
 @method('DELETE')
 
-<button type="submit">Borrar</button>
+<button class="btn btn-danger btn-sm"
+onclick="return confirm('¿Eliminar tipo de usuario?')">
+
+Eliminar
+
+</button>
 
 </form>
 
@@ -51,8 +51,8 @@
 
 @endforeach
 
-</table>
+</tbody>
 
-</div>
+</table>
 
 @endsection

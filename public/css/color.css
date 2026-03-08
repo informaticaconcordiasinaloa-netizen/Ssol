@@ -1,0 +1,52 @@
+/* Fondo general */
+body{
+    background-color:#F5F5F5;
+}
+
+/* Títulos */
+h1,h2,h3{
+    color:#611232;
+}
+
+/* BOTONES */
+
+.btn-success{
+    background-color:#611232;
+    border-color:#611232;
+}
+
+.btn-success:hover{
+    background-color:#4A0F26;
+    border-color:#4A0F26;
+}
+
+.btn-primary{
+    background-color:#611232;
+    border-color:#611232;
+}
+
+.btn-primary:hover{
+    background-color:#4A0F26;
+}
+
+/* BOTON ELIMINAR */
+
+.btn-danger{
+    background-color:#A57F2C;
+    border-color:#A57F2C;
+}
+
+.btn-danger:hover{
+    background-color:#8a6922;
+}
+
+/* TABLAS */
+
+.table thead{
+    background-color:#611232;
+    color:white;
+}
+
+.table{
+    background-color:white;
+}
